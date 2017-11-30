@@ -147,6 +147,7 @@ public:
   virtual void doSwitch(const std::list<ControllerInfo>& /*start_list*/,
                         const std::list<ControllerInfo>& /*stop_list*/) {}
 
+
   /**
    * Reads data from the robot HW
    *
@@ -162,7 +163,10 @@ public:
    * \param period The time passed since the last call to \ref write
    */
   virtual void write(const ros::Time& time, const ros::Duration& period) {}
-};
+
+  virtual bool stop() {return true;}
+  virtual bool recover() {return true;}
+  };
 
 }
 
