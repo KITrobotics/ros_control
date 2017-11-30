@@ -43,133 +43,133 @@ namespace hardware_interface
 {
 
 /** \brief Robot Hardware Interface and Resource Manager
- *
- * This class provides a standardized interface to a set of robot hardware
- * interfaces to the controller manager. It performs resource conflict checking
- * for a given set of controllers and maintains a map of hardware interfaces.
- * It is meant to be used as a base class for abstracting custom robot
- * hardware.
- *
- * The hardware interface map (\ref interfaces_) is a 1-to-1 map between
- * the names of interface types derived from \ref HardwareInterface and
- * instances of those interface types.
- *
- */
+*
+* This class provides a standardized interface to a set of robot hardware
+* interfaces to the controller manager. It performs resource conflict checking
+* for a given set of controllers and maintains a map of hardware interfaces.
+* It is meant to be used as a base class for abstracting custom robot
+* hardware.
+*
+* The hardware interface map (\ref interfaces_) is a 1-to-1 map between
+* the names of interface types derived from \ref HardwareInterface and
+* instances of those interface types.
+*
+*/
 class RobotHW : public InterfaceManager
 {
 public:
-  virtual ~RobotHW() = default;
+virtual ~RobotHW() = default;
 
-  /** \brief The init function is called to initialize the RobotHW from a
-   * non-realtime thread.
-   *
-   * \param root_nh A NodeHandle in the root of the caller namespace.
-   *
-   * \param robot_hw_nh A NodeHandle in the namespace from which the RobotHW
-   * should read its configuration.
-   *
-   * \returns True if initialization was successful
-   */
-  virtual bool init(ros::NodeHandle& /*root_nh*/, ros::NodeHandle &/*robot_hw_nh*/) {return true;}
+/** \brief The init function is called to initialize the RobotHW from a
+* non-realtime thread.
+*
+* \param root_nh A NodeHandle in the root of the caller namespace.
+*
+* \param robot_hw_nh A NodeHandle in the namespace from which the RobotHW
+* should read its configuration.
+*
+* \returns True if initialization was successful
+*/
+virtual bool init(ros::NodeHandle& /*root_nh*/, ros::NodeHandle &/*robot_hw_nh*/) {return true;}
 
-  /** \name Resource Management
-   *\{*/
+/** \name Resource Management
+*\{*/
 
-  /** Check (in non-realtime) if the given set of controllers is allowed
-   * to run simultaneously.
-   *
-   * This default implementation simply checks if any two controllers use the
-   * same resource.
-   */
-  virtual bool checkForConflict(const std::list<ControllerInfo>& info) const
-  {
-    // Map from resource name to all controllers claiming it
-    std::map<std::string, std::list<ControllerInfo>> resource_map;
+/** Check (in non-realtime) if the given set of controllers is allowed
+* to run simultaneously.
+*
+* This default implementation simply checks if any two controllers use the
+* same resource.
+*/
+virtual bool checkForConflict(const std::list<ControllerInfo>& info) const
+{
+// Map from resource name to all controllers claiming it
+std::map<std::string, std::list<ControllerInfo>> resource_map;
 
-    // Populate a map of all controllers claiming individual resources.
-    // We do this by iterating over every claimed resource of every hardware interface used by every controller
-    for (const auto& controller_info : info)
-    {
-      for (const auto& claimed_resource : controller_info.claimed_resources)
-      {
-        for (const auto& iface_resource : claimed_resource.resources)
-        {
-          resource_map[iface_resource].push_back(controller_info);
-        }
-      }
-    }
+// Populate a map of all controllers claiming individual resources.
+// We do this by iterating over every claimed resource of every hardware interface used by every controller
+for (const auto& controller_info : info)
+{
+for (const auto& claimed_resource : controller_info.claimed_resources)
+{
+for (const auto& iface_resource : claimed_resource.resources)
+{
+  resource_map[iface_resource].push_back(controller_info);
+}
+}
+}
 
-    // Enforce resource exclusivity policy: No resource can be claimed by more than one controller
-    bool in_conflict = false;
-    for (const auto& resource_name_and_claiming_controllers : resource_map)
-    {
-      if (resource_name_and_claiming_controllers.second.size() > 1)
-      {
-        std::string controller_list;
-        for (const auto& controller : resource_name_and_claiming_controllers.second)
-          controller_list += controller.name + ", ";
-        ROS_WARN("Resource conflict on [%s].  Controllers = [%s]", resource_name_and_claiming_controllers.first.c_str(), controller_list.c_str());
-        in_conflict = true;
-      }
-    }
+// Enforce resource exclusivity policy: No resource can be claimed by more than one controller
+bool in_conflict = false;
+for (const auto& resource_name_and_claiming_controllers : resource_map)
+{
+if (resource_name_and_claiming_controllers.second.size() > 1)
+{
+std::string controller_list;
+for (const auto& controller : resource_name_and_claiming_controllers.second)
+  controller_list += controller.name + ", ";
+ROS_WARN("Resource conflict on [%s].  Controllers = [%s]", resource_name_and_claiming_controllers.first.c_str(), controller_list.c_str());
+in_conflict = true;
+}
+}
 
-    return in_conflict;
-  }
-  /**\}*/
+return in_conflict;
+}
+/**\}*/
 
-  /** \name Hardware Interface Switching
-   *\{*/
+/** \name Hardware Interface Switching
+*\{*/
 
-  /**
-   * Check (in non-realtime) if given controllers could be started and stopped from the current state of the RobotHW
-   * with regard to necessary hardware interface switches and prepare the switching. Start and stop list are disjoint.
-   * This handles the check and preparation, the actual switch is commited in doSwitch()
-   */
-  virtual bool prepareSwitch(const std::list<ControllerInfo>& /*start_list*/,
-                             const std::list<ControllerInfo>& /*stop_list*/) { return true; }
+/**
+* Check (in non-realtime) if given controllers could be started and stopped from the current state of the RobotHW
+* with regard to necessary hardware interface switches and prepare the switching. Start and stop list are disjoint.
+* This handles the check and preparation, the actual switch is commited in doSwitch()
+*/
+virtual bool prepareSwitch(const std::list<ControllerInfo>& /*start_list*/,
+		     const std::list<ControllerInfo>& /*stop_list*/) { return true; }
 
-  /**
-   * Perform (in realtime) all necessary hardware interface switches in order to start and stop the given controllers.
-   * Start and stop list are disjoint. The feasability was checked in prepareSwitch() beforehand.
-   */
-  virtual void doSwitch(const std::list<ControllerInfo>& /*start_list*/,
-                        const std::list<ControllerInfo>& /*stop_list*/) {}
+/**
+* Perform (in realtime) all necessary hardware interface switches in order to start and stop the given controllers.
+* Start and stop list are disjoint. The feasability was checked in prepareSwitch() beforehand.
+*/
+virtual void doSwitch(const std::list<ControllerInfo>& /*start_list*/,
+		const std::list<ControllerInfo>& /*stop_list*/) {}
 
-  enum SwitchState
-  {
-    DONE,
-    ONGOING,
-    ERROR
-  };
+enum SwitchState
+{
+DONE,
+ONGOING,
+ERROR
+};
 
-  /** \brief Return (in realtime) the state of the last doSwitch(). */
-  virtual SwitchState switchResult() const
-  {
-    return DONE;
-  }
+/** \brief Return (in realtime) the state of the last doSwitch(). */
+virtual SwitchState switchResult() const
+{
+return DONE;
+}
 
-  /** \brief Return (in realtime) the state of the last doSwitch() for a given controller. */
-  virtual SwitchState switchResult(const ControllerInfo& /*controller*/) const
-  {
-    return DONE;
-  }
-  /**\}*/
+/** \brief Return (in realtime) the state of the last doSwitch() for a given controller. */
+virtual SwitchState switchResult(const ControllerInfo& /*controller*/) const
+{
+return DONE;
+}
+/**\}*/
 
-  /** \name Control Loop
-   *\{*/
+/** \name Control Loop
+*\{*/
 
-  /** \brief Read data from the robot hardware.
-   *
-   * The read method is part of the control loop cycle (\ref read, update, \ref write) 
-   * and is used to populate the robot state from the robot's hardware resources
-   * (joints, sensors, actuators). This method should be called before 
-   * controller_manager::ControllerManager::update() and \ref write.
-   * 
-   * \note The name \ref read refers to reading state from the hardware.
-   * This complements \ref write, which refers to writing commands to the hardware.
-   *
-   * Querying WallTime inside \ref read is not realtime safe. The parameters
-   * \ref time and \ref period make it possible to inject time from a realtime source.
+/** \brief Read data from the robot hardware.
+*
+* The read method is part of the control loop cycle (\ref read, update, \ref write) 
+* and is used to populate the robot state from the robot's hardware resources
+* (joints, sensors, actuators). This method should be called before 
+* controller_manager::ControllerManager::update() and \ref write.
+* 
+* \note The name \ref read refers to reading state from the hardware.
+* This complements \ref write, which refers to writing commands to the hardware.
+*
+* Querying WallTime inside \ref read is not realtime safe. The parameters
+* \ref time and \ref period make it possible to inject time from a realtime source.
    *
    * \param time The current time
    * \param period The time passed since the last call to \ref read
@@ -194,7 +194,9 @@ public:
    */
   virtual void write(const ros::Time& /*time*/, const ros::Duration& /*period*/) {}
 
-  /**\}*/
+
+  virtual bool stop() {return true;}
+  virtual bool recover() {return true;}
 };
 
 typedef std::shared_ptr<RobotHW> RobotHWSharedPtr;
