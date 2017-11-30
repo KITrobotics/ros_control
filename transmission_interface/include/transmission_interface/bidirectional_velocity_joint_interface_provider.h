@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Copyright (C) 2013, PAL Robotics S.L.
+// Copyright (C) 2017, Houston Mechatronics Inc.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -8,7 +8,7 @@
 //   * Redistributions in binary form must reproduce the above copyright
 //     notice, this list of conditions and the following disclaimer in the
 //     documentation and/or other materials provided with the distribution.
-//   * Neither the name of hiDOF, Inc. nor the names of its
+//   * Neither the name of Houston Mechatronics nor the names of its
 //     contributors may be used to endorse or promote products derived from
 //     this software without specific prior written permission.
 //
@@ -25,67 +25,24 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //////////////////////////////////////////////////////////////////////////////
 
-/// \author Adolfo Rodriguez Tsouroukdissian
+#ifndef TRANSMISSION_INTERFACE_BIDIRECTIONAL_VELOCITY_JOINT_INTERFACE_PROVIDER_H
+#define TRANSMISSION_INTERFACE_BIDIRECTIONAL_VELOCITY_JOINT_INTERFACE_PROVIDER_H
 
-#include <gtest/gtest.h>
-#include <hardware_interface/internal/interface_manager.h>
+// ros_control
+#include <transmission_interface/transmission_info.h>
+#include <transmission_interface/transmission_interface_loader.h>
+#include <transmission_interface/velocity_joint_interface_provider.h>
 
-using namespace hardware_interface;
-
-struct FooInterface
+namespace transmission_interface
 {
-  FooInterface(int foo): foo(foo) {}
-  int foo;
+class BiDirectionalVelocityJointInterfaceProvider : public VelocityJointInterfaceProvider
+{
+protected:
+
+  bool registerTransmission(TransmissionLoaderData& loader_data, 
+                            TransmissionHandleData& handle_data);
 };
 
-struct BarInterface
-{
-  char* bar;
-};
+} // namespace
 
-struct BazInterface
-{
-  double baz;
-};
-
-TEST(InterfaceManagerTest, InterfaceRegistration)
-{
-  // Register interfaces
-  FooInterface foo_iface(0);
-  BarInterface bar_iface;
-
-  InterfaceManager iface_mgr;
-  iface_mgr.registerInterface(&foo_iface);
-  iface_mgr.registerInterface(&bar_iface);
-
-  // Get interfaces
-  EXPECT_TRUE(&foo_iface == iface_mgr.get<FooInterface>());
-  EXPECT_TRUE(&bar_iface == iface_mgr.get<BarInterface>());
-  EXPECT_FALSE(iface_mgr.get<BazInterface>());
-}
-
-TEST(InterfaceManagerTest, InterfaceRewriting)
-{
-  // Two instances of the same interface
-  FooInterface foo_iface_1(1);
-  FooInterface foo_iface_2(2);
-
-  // Register first interface and validate it
-  InterfaceManager iface_mgr;
-
-  iface_mgr.registerInterface(&foo_iface_1);
-
-  FooInterface* foo_iface_ptr = iface_mgr.get<FooInterface>();
-  EXPECT_EQ(1, foo_iface_ptr->foo);
-
-  // Register second interface and verify that it has taken the place of the previously inserted one
-  iface_mgr.registerInterface(&foo_iface_2);
-  foo_iface_ptr = iface_mgr.get<FooInterface>();
-  EXPECT_EQ(2, foo_iface_ptr->foo);
-}
-
-int main(int argc, char** argv)
-{
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}
+#endif // header guard
