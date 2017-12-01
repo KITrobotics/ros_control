@@ -4,7 +4,7 @@
 #include <hardware_interface/internal/hardware_resource_manager.h>
 #include <string>
 #include <cassert>
-#include <control_msgs/TactileSensor.h>
+#include <iirob_control_msgs/TactileSensor.h>
 
 namespace hardware_interface
 {
@@ -20,7 +20,7 @@ public:
   SDHGripperHandle( const std::string& name, 
 		    const std::vector<std::string>* joint_names,
 		    std::vector<double>* targetAngles,
-		    const std::vector<control_msgs::TactileMatrix>* 
+		    const std::vector<iirob_control_msgs::TactileMatrix>* 
 		      tactile_sensor_matrices,
 		    const std::vector<double>* currentAngles,
 		    const std::map<std::string, int>* joint_order_map
@@ -65,7 +65,7 @@ public:
       targetAngles_->at(i) = targetAngles[index];
     }
   }
-  std::vector<control_msgs::TactileMatrix> getMatrices() const 
+  std::vector<iirob_control_msgs::TactileMatrix> getMatrices() const 
     { assert(tactile_sensor_matrices_); return *tactile_sensor_matrices_; }
   std::vector<double> getCurrentAngles() const { 
     assert(currentAngles_); 
@@ -86,7 +86,7 @@ private:
   const std::vector<std::string>* joint_names_;
   std::vector<double>* targetAngles_;  
   const std::vector<double>* currentAngles_; 
-  const std::vector<control_msgs::TactileMatrix>* tactile_sensor_matrices_;
+  const std::vector<iirob_control_msgs::TactileMatrix>* tactile_sensor_matrices_;
   const std::map<std::string, int>* joint_order_map_;
 };
 

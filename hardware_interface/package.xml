@@ -19,4 +19,6 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <depend>roscpp</depend>
+  <depend>control_msgs</depend>
+  <depend>iirob_control_msgs</depend>
 </package>
