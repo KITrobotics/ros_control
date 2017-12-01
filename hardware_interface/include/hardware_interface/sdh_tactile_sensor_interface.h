@@ -4,7 +4,7 @@
 #include <hardware_interface/internal/hardware_resource_manager.h>
 #include <string>
 #include <cassert>
-#include <control_msgs/TactileSensor.h>
+#include <iirob_control_msgs/TactileSensor.h>
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
 
@@ -19,7 +19,7 @@ public:
   SDHTactileSensorHandle() : name_(""), matrix_(), marker_() {}
 
   SDHTactileSensorHandle(const std::string& name, 
-			 const control_msgs::TactileMatrix* matrix,
+			 const iirob_control_msgs::TactileMatrix* matrix,
 			 const visualization_msgs::Marker* marker) : 
 			 matrix_(matrix),
 			 name_(name),
@@ -36,12 +36,12 @@ public:
   }
   
   std::string getName()     const {return name_;}
-  control_msgs::TactileMatrix getMatrix() const { assert(matrix_); return *matrix_; }
+  iirob_control_msgs::TactileMatrix getMatrix() const { assert(matrix_); return *matrix_; }
   visualization_msgs::Marker getMarker() const { assert(marker_); return *marker_; }
   
 private:
   std::string name_;
-  const control_msgs::TactileMatrix* matrix_;  
+  const iirob_control_msgs::TactileMatrix* matrix_;  
   const visualization_msgs::Marker* marker_;
 };
 

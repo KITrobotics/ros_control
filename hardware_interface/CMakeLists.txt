@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(hardware_interface)
 
-find_package(catkin REQUIRED COMPONENTS roscpp control_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp control_msgs iirob_control_msgs)
 
 include_directories(include)
 
 # Declare catkin package
 catkin_package(
-  CATKIN_DEPENDS roscpp control_msgs
+  CATKIN_DEPENDS roscpp control_msgs iirob_control_msgs
   INCLUDE_DIRS include
   )
 
@@ -43,11 +43,11 @@ if(CATKIN_ENABLE_TESTING)
   catkin_add_gtest(interface_manager_test          test/interface_manager_test.cpp)
   target_link_libraries(interface_manager_test ${catkin_LIBRARIES})
     
-    catkin_add_gtest(posvel_command_interface_test test/posvel_command_interface_test.cpp)
-    target_link_libraries(posvel_command_interface_test ${catkin_LIBRARIES})
+  catkin_add_gtest(posvel_command_interface_test test/posvel_command_interface_test.cpp)
+  target_link_libraries(posvel_command_interface_test ${catkin_LIBRARIES})
     
-    catkin_add_gtest(posvelacc_command_interface_test test/posvelacc_command_interface_test.cpp)
-    target_link_libraries(posvelacc_command_interface_test ${catkin_LIBRARIES})
+  catkin_add_gtest(posvelacc_command_interface_test test/posvelacc_command_interface_test.cpp)
+  target_link_libraries(posvelacc_command_interface_test ${catkin_LIBRARIES})
     
 endif()
 
