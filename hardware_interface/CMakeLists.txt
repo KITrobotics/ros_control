@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(hardware_interface)
 
-find_package(catkin REQUIRED COMPONENTS roscpp control_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp control_msgs iirob_control_msgs)
 
 # Declare catkin package
 catkin_package(
-  CATKIN_DEPENDS roscpp control_msgs
+  CATKIN_DEPENDS roscpp control_msgs iirob_control_msgs
   INCLUDE_DIRS include
   )
 

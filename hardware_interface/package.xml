@@ -20,4 +20,6 @@
   <test_depend>rostest</test_depend>
   <test_depend>rosunit</test_depend>
 
+  <depend>control_msgs</depend>
+  <depend>iirob_control_msgs</depend>
 </package>
