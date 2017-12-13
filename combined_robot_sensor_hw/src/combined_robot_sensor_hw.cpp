@@ -64,8 +64,7 @@ namespace combined_robot_hw
         {
           std::vector<std::string> cur_types = sensor_loader_.getDeclaredClasses();          
           for(size_t i=0; i < cur_types.size(); i++)
-          {
-            std::cout<<"types:"<<cur_types.size()<<" "<<type<<" "<<cur_types[i]<<std::endl;
+          {            
             if (type == cur_types[i])
             {
               sensor_hw = sensor_loader_.createInstance(type);

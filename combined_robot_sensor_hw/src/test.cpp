@@ -9,8 +9,7 @@ int main(int argc, char** argv)
   ros::AsyncSpinner spinner(1);
   spinner.start();
 
-  ros::NodeHandle nh("~");
-  std::cout<<"nh: "<<nh.getNamespace()<<std::endl;
+  ros::NodeHandle nh("~");  
   combined_robot_hw::CombinedRobotSensorHW hw;
   bool init_success = hw.init(nh, nh);
 
