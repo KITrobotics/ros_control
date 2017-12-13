@@ -4,9 +4,4 @@
     FTS interface
   </description>
   </class>
-  <class name="hardware_interface/ForceTorqueSensorHW" type="hardware_interface::ForceTorqueSensorHW" base_class_type="hardware_interface::SensorHW">
-  <description>
-    FTS interface
-  </description>
-  </class>
 </library>

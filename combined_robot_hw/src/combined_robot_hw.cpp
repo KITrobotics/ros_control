@@ -180,7 +180,7 @@ namespace combined_robot_hw
 
     this->registerInterfaceManager(robot_hw.get());
 
-    ROS_INFO("Successfully load robot HW '%s'", name.c_str());
+    ROS_DEBUG("Successfully load robot HW '%s'", name.c_str());
     return true;
   }
 

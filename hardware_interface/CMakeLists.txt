@@ -51,7 +51,7 @@ if(CATKIN_ENABLE_TESTING)
     
 endif()
 
-add_library(hardware_interface src/force_torque_sensor_interface.cpp src/force_torque_sensor_hw.cpp)
+add_library(hardware_interface src/force_torque_sensor_interface.cpp)
 
 # Install
 install(DIRECTORY include/${PROJECT_NAME}/

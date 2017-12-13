@@ -31,7 +31,6 @@
 #define HARDWARE_INTERFACE_FORCE_CONTROL_SENSOR_INTERFACE_H
 
 #include <hardware_interface/internal/hardware_resource_manager.h>
-#include <hardware_interface/internal/handler_base.h>
 #include <string>
 
 namespace hardware_interface
