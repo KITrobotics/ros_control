@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+        
+    <rosparam command="load" file="$(find combined_robot_sensor_hw)/config/config.yaml"/>    
+
+    <!-- start FTS Driver Node -->
+    <node pkg="combined_robot_sensor_hw" type="combined_robot_sensor_hw_node" name="combined_robot_sensor_hw_node" ns="/" cwd="node" respawn="false" output="screen">
+    </node>
+
+</launch>
+

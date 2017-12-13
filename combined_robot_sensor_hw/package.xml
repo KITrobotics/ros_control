@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>combined_robot_sensor_hw</name>
+  <version>0.12.0</version>
+  <description>Combined Robot and Sensor HW class.</description>
+  <maintainer email="todo@todo.com">To DO</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">https://github.com/ros-controls/ros_control/wiki</url>
+  <url type="bugtracker">https://github.com/ros-controls/ros_control/issues</url>
+  <url type="repository">https://github.com/ros-controls/ros_control</url>
+
+  <author email="todo@todo.com">To DO</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>hardware_interface</depend>
+  <depend>pluginlib</depend>
+  <depend>roscpp</depend>
+  <depend>combined_robot_hw</depend>
+  <depend>controller_manager</depend>
+  <depend>iirob_filters</depend>
+  <depend>filters</depend>
+  <depend>ati_force_torque</depend>
+</package>
