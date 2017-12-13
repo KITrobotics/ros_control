@@ -17,5 +17,10 @@
 
   <buildtool_depend>catkin</buildtool_depend>
   <depend>roscpp</depend>
+  <depend>pluginlib</depend>   
   <test_depend>rosconsole</test_depend>
+  
+  <export>
+    <hardware_interface plugin="${prefix}/interface_plugin.xml"/>
+  </export>
 </package>

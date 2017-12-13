@@ -7,7 +7,7 @@ include_directories(include)
 
 # Declare catkin package
 catkin_package(
-  CATKIN_DEPENDS roscpp
+  CATKIN_DEPENDS roscpp pluginlib
   INCLUDE_DIRS include
   )
 
@@ -51,6 +51,12 @@ if(CATKIN_ENABLE_TESTING)
     
 endif()
 
+add_library(hardware_interface src/force_torque_sensor_interface.cpp src/force_torque_sensor_hw.cpp)
+
 # Install
 install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
+
+install(FILES interface_plugin.xml
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)

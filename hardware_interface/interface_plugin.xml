@@ -1,0 +1,12 @@
+<library path="lib/libhardware_interface">
+  <class name="hardware_interface/ForceTorqueSensorInterface" type="hardware_interface::ForceTorqueSensorInterface" base_class_type="hardware_interface::HardwareInterface">
+  <description>
+    FTS interface
+  </description>
+  </class>
+  <class name="hardware_interface/ForceTorqueSensorHW" type="hardware_interface::ForceTorqueSensorHW" base_class_type="hardware_interface::SensorHW">
+  <description>
+    FTS interface
+  </description>
+  </class>
+</library>
