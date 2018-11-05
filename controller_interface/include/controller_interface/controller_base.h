@@ -161,6 +161,8 @@ private:
 
 };
 
+typedef std::shared_ptr<ControllerBase> ControllerBaseSharedPtr;
+
 }
 
 
