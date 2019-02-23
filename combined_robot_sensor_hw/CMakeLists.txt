@@ -13,7 +13,6 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   combined_robot_hw
   controller_manager
-  ati_force_torque
   iirob_filters
   filters
 )
@@ -26,7 +25,7 @@ include_directories(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS hardware_interface pluginlib roscpp combined_robot_hw controller_manager ati_force_torque iirob_filters filters
+  CATKIN_DEPENDS hardware_interface pluginlib roscpp combined_robot_hw controller_manager iirob_filters filters
 )
 
 add_library(${PROJECT_NAME}

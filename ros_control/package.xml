@@ -27,6 +27,8 @@
   <exec_depend>controller_manager_msgs</exec_depend>
   <exec_depend>combined_robot_hw</exec_depend>
   <exec_depend>combined_robot_hw_tests</exec_depend>
+  <exec_depend>combined_robot_sensor_hw</exec_depend>
+  
 
   <export>
     <metapackage/>

@@ -93,6 +93,8 @@ public:
   virtual bool recover() {return true;}
 };
 
+typedef boost::shared_ptr<SensorHW> SensorHWSharedPtr;
+
 }
 
 #endif

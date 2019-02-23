@@ -5,7 +5,7 @@
 namespace combined_robot_hw
 {
   CombinedRobotSensorHW::CombinedRobotSensorHW() :
-    robot_hw_loader_("hardware_interface", "hardware_interface::RobotHW"), sensor_loader_("hardware_interface","hardware_interface::SensorHW")
+    sensor_loader_("hardware_interface","hardware_interface::SensorHW")
   {}
 
 
@@ -21,7 +21,7 @@ namespace combined_robot_hw
     std::string param_name = "sensor";
     if (!robot_hw_nh.getParam(param_name, sensors))
     {
-      ROS_ERROR_STREAM("Could not find '" << param_name << "' parameter (namespace: " << root_nh.getNamespace() << ").");
+      ROS_ERROR_STREAM("Could not find '" << param_name << "' parameter (namespace: " << robot_hw_nh.getNamespace() << ").");
       return false;
     }
     std::vector<std::string>::iterator it;
@@ -62,7 +62,7 @@ namespace combined_robot_hw
         ROS_DEBUG("Constructing sensor HW '%s' of type '%s'", name.c_str(), type.c_str());
         try
         {
-          std::vector<std::string> cur_types = sensor_loader_.getDeclaredClasses();          
+          std::vector<std::string> cur_types = sensor_loader_.getDeclaredClasses();
           for(size_t i=0; i < cur_types.size(); i++)
           {            
             if (type == cur_types[i])

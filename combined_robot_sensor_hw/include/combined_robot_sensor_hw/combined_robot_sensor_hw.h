@@ -63,8 +63,6 @@ protected:
   ros::NodeHandle root_nh_;
   ros::NodeHandle robot_hw_nh_;
   pluginlib::ClassLoader<hardware_interface::SensorHW> sensor_loader_;
-  pluginlib::ClassLoader<hardware_interface::RobotHW> robot_hw_loader_;
-  std::vector<boost::shared_ptr<hardware_interface::RobotHW> > robot_hw_list_;
   std::vector<boost::shared_ptr<hardware_interface::SensorHW> > sensor_list_;
 
   virtual bool loadSensorHW(const std::string& name);
