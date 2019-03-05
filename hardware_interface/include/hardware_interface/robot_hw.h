@@ -85,7 +85,7 @@ public:
    * \returns True if stopping was successful
    */
   virtual bool stop() {return true;}
-  
+
   /** \brief The recover function is called to recover/reinitialize the RobotHW after and
    * error state (e.g. emergency stop, safety stop, hardware limits) from a non-realtime 
    * thread.
