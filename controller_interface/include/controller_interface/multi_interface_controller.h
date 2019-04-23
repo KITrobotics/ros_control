@@ -38,7 +38,7 @@
 #include <hardware_interface/robot_hw.h>
 #include <hardware_interface/hardware_interface.h>
 #include <ros/ros.h>
-
+#include <cxxabi.h>
 namespace controller_interface
 {
 
@@ -190,7 +190,8 @@ std::string enumerateElements(const T& val,
  * \pre When specified, template parameters \c T1 to \c T4 must be different
  * types.
  */
-template <class T1, class T2 = void, class T3 = void, class T4 = void>
+// template <class T1, class T2 = void, class T3 = void, class T4 = void>
+template <class T1, class T2 = void, class T3 = void, class T4 = void, class T5 = void>
 class MultiInterfaceController: public ControllerBase
 {
 public:
@@ -343,7 +344,8 @@ protected:
     return hasInterface<T1>(robot_hw) &&
            hasInterface<T2>(robot_hw) &&
            hasInterface<T3>(robot_hw) &&
-           hasInterface<T4>(robot_hw);
+//            hasInterface<T4>(robot_hw);
+           hasInterface<T4>(robot_hw) && hasInterface<T5>(robot_hw);
   }
 
   /**
@@ -358,6 +360,7 @@ protected:
     clearClaims<T2>(robot_hw);
     clearClaims<T3>(robot_hw);
     clearClaims<T4>(robot_hw);
+    clearClaims<T5>(robot_hw);
   }
 
   /**
@@ -376,6 +379,7 @@ protected:
     extractInterfaceResources<T2>(robot_hw_in, robot_hw_out);
     extractInterfaceResources<T3>(robot_hw_in, robot_hw_out);
     extractInterfaceResources<T4>(robot_hw_in, robot_hw_out);
+    extractInterfaceResources<T5>(robot_hw_in, robot_hw_out);
   }
 
   /**
@@ -394,6 +398,7 @@ protected:
     populateClaimedResources<T2>(robot_hw, claimed_resources);
     populateClaimedResources<T3>(robot_hw, claimed_resources);
     populateClaimedResources<T4>(robot_hw, claimed_resources);
+    populateClaimedResources<T5>(robot_hw, claimed_resources);
   }
 
   /** Robot hardware abstraction containing only the subset of interfaces requested by the controller. */
@@ -417,6 +422,11 @@ inline bool hasInterface(hardware_interface::RobotHW* robot_hw)
   T* hw = robot_hw->get<T>();
   if (!hw)
   {
+      int status;
+    char * demangled = abi::__cxa_demangle(typeid(*robot_hw).name(),0,0,&status);
+    ROS_ERROR("AAAAAAAAAAAAAAAAAA> %s", demangled);
+    free(demangled);
+
     const std::string hw_name = hardware_interface::internal::demangledTypeName<T>();
     ROS_ERROR_STREAM("This controller requires a hardware interface of type '" << hw_name << "', " <<
                      "but is not exposed by the robot. Available interfaces in robot:\n" <<
