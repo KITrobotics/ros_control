@@ -3,8 +3,6 @@ project(hardware_interface)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
-  control_msgs
-  iirob_control_msgs
 )
 
 # Declare a catkin package
@@ -12,7 +10,7 @@ catkin_package(
   INCLUDE_DIRS
     include
   CATKIN_DEPENDS
-    roscpp control_msgs iirob_control_msgs
+    roscpp
 )
 
 
